@@ -4,12 +4,36 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
-function reducer() {
+function reducer(state, action) {
+  if (action.type === "changeTheState") {
+    return action.payload.newState;
+  }
+
   return "state";
 }
 const store = createStore(reducer);
 
 console.log(store.getState());
+
+const action = {
+  type: "changeTheState",
+  payload: {
+    newState: "my New State",
+  },
+};
+const action2 = {
+  type: "changeTheState",
+  payload: {
+    newState: "my New State 2",
+  },
+};
+store.subscribe(() => {
+  console.log("store updated");
+  console.log(store.getState());
+});
+
+store.dispatch(action);
+store.dispatch(action2);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
